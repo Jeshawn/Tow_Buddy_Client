@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+sourceCompatibility = "1.4"
+targetCompatibility = "1.4"
+
+dependencies {
+    compile files('lib/commons-logging.jar')
+    compile files('lib/log4j-1.2.5.jar')
+    compile files('build.lib/junit.jar')
+    compile files('build.lib/ant.jar')
+}

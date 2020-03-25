@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+android {
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+    }
+    useLibrary 'org.apache.http.legacy'
+    signingConfigs {}
+    buildTypes {}
+    compileSdkVersion 28
+    compileOptions{
+        sourceCompatibility '1.8'
+        targetCompatibility '1.8'
+        packagingOptions {
+            pickFirst 'stylesheet.css'
+        }
+        lintOptions{
+            abortOnError false
+        }
+
+
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main'
+    }
+    defaultConfig {
+        applicationId "com.Tow_Buddy"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta4'
+    implementation 'com.android.support:design:28.0.0'
+   // implementation(name:'HERE-sdk', ext:'aar')
+    testImplementation 'junit:junit:4.13'
+    implementation 'com.android.support:multidex:1.0.3'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation project(path: ':SMPP_api')
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}

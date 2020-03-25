@@ -1,0 +1,109 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Risky Project Location:
+-----------------------
+The tools *should* handle project locations in any directory. However,
+due to bugs, placing projects in directories containing spaces in the
+path, or characters like ", ' and &, have had issues. We're working to
+eliminate these bugs, but to save yourself headaches you may want to
+move your project to a location where this is not a problem.
+C:\Program Files\Android\Tow_Buddy_Prototype\app\smppapi_0.3.91
+          -                                                    
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .build.xml.swp
+* .checkstyle
+* .pom.xml.swp
+* AndroidManifest.xml
+* ChangeLog
+* Contributors
+* INSTALL
+* LICENSE
+* Log4J-LICENSE.txt
+* META-INF\
+* META-INF\MANIFEST.MF
+* README
+* TODO
+* apache-licence.txt
+* build.lib\
+* build.lib\antlr.jar
+* build.lib\checkstyle-4.1.jar
+* build.lib\checkstyle-optional-4.1.jar
+* build.lib\checkstyle-report.xsl
+* build.lib\commons-beanutils-core.jar
+* build.lib\commons-cli.jar
+* build.lib\commons-collections.jar
+* build.lib\commons-logging.jar
+* build.lib\emma.jar
+* build.lib\emma_ant.jar
+* build.properties
+* build.xml
+* docs\
+* docs\UserGuide.html
+* docs\overview.html
+* examples.properties
+* lib\
+* lib\smppapi-0.3.9-javadoc.jar
+* lib\smppapi-0.3.9-javadoc.jar.asc
+* lib\smppapi-0.3.9-sources.jar
+* lib\smppapi-0.3.9-sources.jar.asc
+* lib\smppapi-0.3.9.jar
+* lib\smppapi-0.3.9.jar.asc
+* lib\smppapi-0.3.9.pom.asc
+* misc\
+* misc\Makefile
+* misc\stress_recv.c
+* misc\stress_recv.h
+* misc\tests\
+* misc\tests\StressClient.java
+* pom.xml
+* run-examples.xml
+* src\
+* src\assembly\
+* src\assembly\smppapi.xml
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* build.lib\ant.jar => app\build.lib\ant.jar
+* build.lib\junit.jar => app\build.lib\junit.jar
+* lib\commons-logging.jar => app\lib\commons-logging.jar
+* lib\log4j-1.2.5.jar => app\lib\log4j-1.2.5.jar
+* src\examples\ => app\src\main\java\
+* src\java\ => app\src\main\java\
+* src\java\ie\omk\smpp\event\package.html => app\src\main\resources\ie\omk\smpp\event\package.html
+* src\java\ie\omk\smpp\message\package.html => app\src\main\resources\ie\omk\smpp\message\package.html
+* src\java\ie\omk\smpp\message\tlv\package.html => app\src\main\resources\ie\omk\smpp\message\tlv\package.html
+* src\java\ie\omk\smpp\net\package.html => app\src\main\resources\ie\omk\smpp\net\package.html
+* src\java\ie\omk\smpp\package.html => app\src\main\resources\ie\omk\smpp\package.html
+* src\java\ie\omk\smpp\util\package.html => app\src\main\resources\ie\omk\smpp\util\package.html
+* src\java\ie\omk\smpp\version\package.html => app\src\main\resources\ie\omk\smpp\version\package.html
+* src\resources\ => app\src\main\java\
+* src\resources\log4j.properties => app\src\main\resources\log4j.properties
+* src\resources\smppapi.properties => app\src\main\resources\smppapi.properties
+* src\tests\ => app\src\main\java\
+* src\tests\checkstyle.xml => app\src\main\resources\checkstyle.xml
+* src\tests\ie\omk\smpp\util\TestAPIConfig.properties => app\src\main\resources\ie\omk\smpp\util\TestAPIConfig.properties
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

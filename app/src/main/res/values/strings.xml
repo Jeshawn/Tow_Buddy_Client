@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tow_Buddy_Prototype</string>
+    <string name="WelcomeMessage">Need a tow? Enter your info to get started.</string>
+    <string name="action_settings">Settings</string>
+    <string name="Confirm_Location">Confirm Location</string>
+    <string name="Initial_Message">Press and hold marker, drag to change coordinates.</string>
+    <string name="Accept_Coordinate_Send">Send</string>
+    <string name="Decline_Coordinate_Send">Cancel</string>
+    <string name="Coordinate_Alert_Box_Message">Do you wish to send this location data?</string>
+    <string name="SuccessfulCoordinateSend">Coordinates Sent</string>
+    <string name="PhoneNumberToInput">Phone Number</string>
+    <string name="WelcomeScreenButton">Request tow</string>
+    <string name="IncorrectPhoneNumberMessage">Use 10 digit format.</string>
+    <string name="Failed_ToSendCoordinates">Send failed; please try again.</string>
+    <string name="User_Name">First and last name</string>
+</resources>
