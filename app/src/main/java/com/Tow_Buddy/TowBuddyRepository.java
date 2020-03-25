@@ -82,7 +82,7 @@ public class TowBuddyRepository extends AppCompatActivity implements Runnable
         }
     }
 
-    private void sortForAppropriateEmployee() //Get logged in employees, sort through next for tow
+    private void sortForAppropriateEmployee()  //Get logged in employees, sort through next for tow
     {
         try
         {
