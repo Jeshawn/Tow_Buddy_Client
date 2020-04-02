@@ -1,7 +1,6 @@
-package com.Tow_Buddy;
+package com.Tow_Buddy.Tow_Buddy_Customer_Side;
 
 import android.content.Context;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,11 +30,6 @@ public class TowBuddyRepository extends AppCompatActivity implements Runnable
     private String _employeePhoneNumber;
     private int ticketNumberFromCustomerHistory;
     public void run()
-    {
-
-    }
-    //Creates a new employee in the Employee table
-    public TowBuddyRepository(String Name, String PhoneNumber, String EmployeeId)
     {
 
     }
@@ -81,7 +75,6 @@ public class TowBuddyRepository extends AppCompatActivity implements Runnable
             Log.e("RepositoryError", exception.toString());
         }
     }
-
     private void sortForAppropriateEmployee()  //Get logged in employees, sort through next for tow
     {
         try
@@ -135,7 +128,6 @@ public class TowBuddyRepository extends AppCompatActivity implements Runnable
             Log.e("EmployeeSortError", exception.toString());
         }
     }
-
     public void sendCoordinates(String employeePhoneNumber) //Send coordinates to employee
     {
         try

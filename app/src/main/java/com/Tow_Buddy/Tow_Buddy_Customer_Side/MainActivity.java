@@ -1,4 +1,4 @@
-package com.Tow_Buddy;
+package com.Tow_Buddy.Tow_Buddy_Customer_Side;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.Tow_Buddy.R;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.Image;
 import com.here.android.mpa.common.OnEngineInitListener;

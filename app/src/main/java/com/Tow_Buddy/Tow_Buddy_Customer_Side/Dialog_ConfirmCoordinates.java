@@ -1,10 +1,11 @@
-package com.Tow_Buddy;
+package com.Tow_Buddy.Tow_Buddy_Customer_Side;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+
+import com.Tow_Buddy.R;
 
 
 public class Dialog_ConfirmCoordinates extends DialogFragment

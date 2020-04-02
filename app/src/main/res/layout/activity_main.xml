@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Initial_Message"
-        tools:context=".MainActivity" />
+        tools:context=".Tow_Buddy_Customer_Side.MainActivity" />
 
     <fragment
         android:id="@+id/mapfragment"
