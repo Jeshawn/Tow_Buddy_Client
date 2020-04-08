@@ -24,21 +24,22 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class TowBuddyRepository extends AppCompatActivity implements Runnable
+public class CustomerRepositoryLayer extends AppCompatActivity implements Runnable
 {
     private Context context;
     private String _employeePhoneNumber;
     private int ticketNumberFromCustomerHistory;
+    private boolean coordinateSendSuccess;
     public void run()
     {
 
     }
     //Creates a new Tow Buddy order in the CustomerHistory table
-    public TowBuddyRepository(String Name, //Called from Customer side
-                              String PhoneNumber,
-                              String TimeReceived,
-                              String Coordinates,
-                              Context context)
+    public CustomerRepositoryLayer(String Name, //Called from Customer side
+                                   String PhoneNumber,
+                                   String TimeReceived,
+                                   String Coordinates,
+                                   Context context)
     {
         try
         {
@@ -130,53 +131,59 @@ public class TowBuddyRepository extends AppCompatActivity implements Runnable
     }
     public void sendCoordinates(String employeePhoneNumber) //Send coordinates to employee
     {
-        try
+        if(!coordinateSendSuccess)
         {
-            String EMAIL_SUBJECT = "Test Send Email via SMTP";
-            String EMAIL_TEXT = MainActivity.message;
-            Properties prop = System.getProperties();
-            prop.put(
-                    "mail.smtp.auth",
-                    "true");
-            prop.put(
-                    "mail.smtp.port",
-                    "587"); // default port 25
-            prop.put(
-                    "mail.smtp.host",
-                    "smtp.mail.yahoo.com");
-            prop.put(
-                    "mail.smtp.starttls.enable",
-                    "true");
-            Session session = Session.getInstance(prop,
-                    new javax.mail.Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication("towbuddy@yahoo.com", "mttbMTTB1113");
-                        }
-                    });
-            MimeMessage message = new MimeMessage(session);
+            try {
+                String EMAIL_SUBJECT = "Test Send Email via SMTP";
+                String EMAIL_TEXT = MainActivity.message;
+                Properties prop = System.getProperties();
+                prop.put(
+                        "mail.smtp.auth",
+                        "true");
+                prop.put(
+                        "mail.smtp.port",
+                        "587"); // default port 25
+                prop.put(
+                        "mail.smtp.host",
+                        "smtp.mail.yahoo.com");
+                prop.put(
+                        "mail.smtp.starttls.enable",
+                        "true");
+                Session session = Session.getInstance(prop,
+                        new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication("towbuddy@yahoo.com", "mttbMTTB1113");
+                            }
+                        });
+                MimeMessage message = new MimeMessage(session);
 
-            // from
-            message.setFrom(new InternetAddress("towbuddy@yahoo.com"));
+                // from
+                message.setFrom(new InternetAddress("towbuddy@yahoo.com"));
 
-            // to
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(
-                            employeePhoneNumber + "@tmomail.net", //This should be implemented properly when employee carrier details are known
-                            false));
+                // to
+                message.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(
+                                employeePhoneNumber + "@tmomail.net", //This should be implemented properly when employee carrier details are known
+                                false));
 
-            // subject
-            message.setSubject("New Tow from sender: " + MainActivity.customerPhoneNumber);
+                // subject
+                message.setSubject("New Tow from sender: " + MainActivity.customerPhoneNumber);
 
-            // content
-            message.setText(MainActivity.message);
+                // content
+                message.setText(MainActivity.message);
 
-            Transport.send(message);
+                Transport.send(message);
 
-            runOnUiThread(new Dialog_CoordinateSendingSuccess(this.context));
+                coordinateSendSuccess = true;
+
+                runOnUiThread(new Dialog_CoordinateSendingSuccess(this.context));
+            } catch (Exception exception) {
+                Log.e("EmailError", exception.toString());
+            }
         }
-        catch (Exception exception)
+        else
         {
-            Log.e("EmailError", exception.toString());
+            return;
         }
 
         updateEmployeeTicketNumber();

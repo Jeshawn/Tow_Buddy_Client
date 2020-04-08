@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.Tow_Buddy.Tow_Buddy_Customer_Side.MainActivity;
+import com.Tow_Buddy.Tow_Buddy_Employee_Side.EmployeeLoginPage;
+
 public class WelcomeScreen extends AppCompatActivity
 {
     public String phoneNumber;
@@ -36,8 +39,12 @@ public class WelcomeScreen extends AppCompatActivity
         {
             Log.e("Error", exception.toString());
         }
+    }
 
-
+    public void employeeLoggingIn(View view)
+    {
+        Intent intent = new Intent(this, EmployeeLoginPage.class);
+        startActivity(intent);
     }
     public void incorrectPhoneNumberFormat()
     {
