@@ -1,6 +1,7 @@
 package com.Tow_Buddy.Tow_Buddy_Customer_Side;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,7 +30,6 @@ public class CustomerRepositoryLayer extends AppCompatActivity implements Runnab
     private Context context;
     private String _employeePhoneNumber;
     private int ticketNumberFromCustomerHistory;
-    private boolean coordinateSendSuccess;
     public void run()
     {
 
@@ -131,7 +131,7 @@ public class CustomerRepositoryLayer extends AppCompatActivity implements Runnab
     }
     public void sendCoordinates(String employeePhoneNumber) //Send coordinates to employee
     {
-        if(!coordinateSendSuccess)
+        if(this.getIntent().getBooleanExtra("coordinateSendSuccess", false))
         {
             try {
                 String EMAIL_SUBJECT = "Test Send Email via SMTP";
@@ -174,10 +174,12 @@ public class CustomerRepositoryLayer extends AppCompatActivity implements Runnab
 
                 Transport.send(message);
 
-                coordinateSendSuccess = true;
+                this.getIntent().putExtra("coordinateSendSuccess", true);
 
                 runOnUiThread(new Dialog_CoordinateSendingSuccess(this.context));
-            } catch (Exception exception) {
+
+            } catch (Exception exception)
+            {
                 Log.e("EmailError", exception.toString());
             }
         }
