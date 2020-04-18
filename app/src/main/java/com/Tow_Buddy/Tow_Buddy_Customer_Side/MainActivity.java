@@ -228,8 +228,6 @@ public class MainActivity extends AppCompatActivity {
                     .getCoordinate());
         }
     }
-
-
 }
 
 

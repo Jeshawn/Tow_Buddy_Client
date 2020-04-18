@@ -1,5 +1,9 @@
 package com.Tow_Buddy.Tow_Buddy_Employee_Side;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -20,6 +24,13 @@ public class ActiveTowsScreen extends AppCompatActivity
 {
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> arrayAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.active_tows);
+    }
     public void ActiveTowsScreen()
     {
         getActiveTows();
@@ -58,19 +69,18 @@ public class ActiveTowsScreen extends AppCompatActivity
             {
                 this.arrayList.add(jsonArray.getString(i));
             }
-
-
         }
         catch(Exception exception)
         {
             Log.e("ActiveTowScreenError", exception.toString());
         }
-
     }
 
     private void copyCoordinates()
     {
-
+        String towData;
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        //ClipData clip = ClipData.newPlainText("TowCoordinates", );
+       // clipboard.setPrimaryClip(clip);
     }
-
 }

@@ -41,7 +41,7 @@
             android:value="wU2Zg84yeGnqNukGsQorxg" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Tow_Buddy_Customer_Side.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -58,6 +58,26 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Tow_Buddy_Employee_Side.EmployeeLoginPage"
+            android:label="@string/EmployeeLoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Tow_Buddy_Employee_Side.ActiveTowsScreen"
+            android:label="@string/Bad_Login"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

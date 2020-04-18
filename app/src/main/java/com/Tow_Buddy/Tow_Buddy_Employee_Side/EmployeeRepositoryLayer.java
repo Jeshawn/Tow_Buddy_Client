@@ -3,18 +3,22 @@ package com.Tow_Buddy.Tow_Buddy_Employee_Side;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class EmployeeRepositoryLayer extends AppCompatActivity
+import org.json.JSONArray;
+import org.json.JSONObject;
+public class EmployeeRepositoryLayer extends AppCompatActivity implements Runnable
+
 {
+    public void run()
+    {
+        attemptLogin();
+    }
     public void attemptLogin()
     {
         if(!checkForDatabaseEntry())
@@ -34,10 +38,12 @@ public class EmployeeRepositoryLayer extends AppCompatActivity
                 try (OutputStream outputStream = httpURLConnection.getOutputStream())
                 {
                     String input = "{\"employeeName\":\""
-                            + this.getIntent().getCharArrayExtra("employeeName").toString()
+                            +
+                            EmployeeLoginPage.static_name
                             + "\", \"employeePhoneNumber\":\""
-                            + this.getIntent().getCharArrayExtra("employeePhoneNumber").toString()
-                            + this.getIntent().getCharArrayExtra("employeeId").toString()
+                            + EmployeeLoginPage.static_phoneNumber
+                            + "\", \"employeeId\":\""
+                            + EmployeeLoginPage.static_employeeIdNumber
                             + "\"}".getBytes();
                     byte[] outputString = input.getBytes();
                     outputStream.write(outputString, 0, outputString.length);
@@ -72,7 +78,7 @@ public class EmployeeRepositoryLayer extends AppCompatActivity
             try (OutputStream outputStream = httpURLConnection.getOutputStream())
             {
                 String input = "{\"employeeName\":\""
-                        + this.getIntent().getCharArrayExtra("employeeId").toString()
+                        + EmployeeLoginPage.static_name
                         + "\"}".getBytes();
                 byte[] outputString = input.getBytes();
                 outputStream.write(outputString, 0, outputString.length);
@@ -116,7 +122,7 @@ public class EmployeeRepositoryLayer extends AppCompatActivity
             for (int i = 0; i < jsonArray.length(); i++) //If there is no record of a ticket number, assign it to whoever's turn it is
             {
                 tempJSONObject = jsonArray.getJSONObject(i);
-                if (tempJSONObject.getInt("EmployeeId") == this.getIntent().getIntExtra("employeeId", -1))
+                if (tempJSONObject.getInt("EmployeeId") == Integer.parseInt(EmployeeLoginPage.static_employeeIdNumber));
                 {
                     existsInDatabase = true;
                     break;

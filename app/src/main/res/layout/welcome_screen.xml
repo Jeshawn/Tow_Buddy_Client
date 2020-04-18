@@ -14,23 +14,22 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:onClick="beginMainActivity"
         android:text="@string/SignInButton_Text"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/NotACustomerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customerPhoneNumber"
-        app:layout_constraintVertical_bias="0.07"
+        app:layout_constraintVertical_bias="0.54"
         tools:text="@string/RequestTow_Button" />
 
     <Button
         android:id="@+id/NotACustomerButton"
-        android:layout_width="273dp"
-        android:layout_height="38dp"
-        android:layout_marginBottom="176dp"
+        android:layout_width="280dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="120dp"
         android:background="#FFFFFF"
         android:ellipsize="middle"
         android:fontFamily="sans-serif-condensed-medium"
@@ -41,6 +40,7 @@
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.321" />
@@ -49,6 +49,7 @@
         android:id="@+id/customerName"
         android:layout_width="371dp"
         android:layout_height="59dp"
+        android:layout_marginTop="53dp"
         android:layout_marginBottom="4dp"
         android:ems="10"
         android:hint="@string/User_Name"
@@ -57,7 +58,7 @@
         app:layout_constraintBottom_toTopOf="@+id/customerPhoneNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CustomerInfo"
+        app:layout_constraintTop_toBottomOf="@+id/WelcomeMessage"
         app:layout_constraintVertical_bias="0.384"
         tools:text="First and last name" />
 
@@ -91,12 +92,12 @@
         android:fontFamily="serif"
         android:text="@string/WelcomeMessage"
         android:textColor="#000000"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/customerName"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.757"
+        app:layout_constraintVertical_bias="0.129"
         tools:text="@string/WelcomeMessage" />
 
 </android.support.constraint.ConstraintLayout>

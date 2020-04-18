@@ -2,6 +2,7 @@ package com.Tow_Buddy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -43,8 +44,8 @@ public class WelcomeScreen extends AppCompatActivity
 
     public void employeeLoggingIn(View view)
     {
-        Intent intent = new Intent(this, EmployeeLoginPage.class);
-        startActivity(intent);
+         Intent intent = new Intent(this, EmployeeLoginPage.class);
+         startActivity(intent);
     }
     public void incorrectPhoneNumberFormat()
     {
