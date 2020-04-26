@@ -3,6 +3,7 @@
     <string name="app_name">Tow_Buddy_Prototype</string>
     <string name="Accept_Coordinate_Send">Send</string>
     <string name="Active_Tows">Active Tows</string>
+    <string name="Cancel">Cancel</string>
     <string name="CancelTow_AlertDialog">Are you sure you don\'t need a tow anymore?</string>
     <string name="CancelTow_Button">Cancel Tow</string>
     <string name="Confirm_Location">Confirm Location</string>
@@ -19,12 +20,14 @@
     <string name="IncorrectPhoneNumberMessage">Use 10 digit format.</string>
     <string name="Initial_Message">Press and hold marker, drag to change coordinates.</string>
     <string name="Not_a_customer">Tap here if you aren\'t a customer.</string>
+    <string name="Okay">Okay</string>
     <string name="PhoneNumberToInput">Phone Number</string>
+    <string name="RepositoryLayerLabel_Customer">CustomerRepositoryLayer</string>
+    <string name="RepositoryLayerLabel_Employee">EmployeeRepositoryLayer</string>
     <string name="RequestTow_Button">REQUEST TOW</string>
     <string name="ResendCoordinates_Button">Resend Coordinates</string>
+    <string name="SetLocationActivity">SetLocationActivity</string>
     <string name="SignInButton_Text">SIGN IN</string>
-    <string name="Okay">Okay</string>
-    <string name="Cancel">Cancel</string>
     <string name="SuccessfulCoordinateSend">Coordinates Sent</string>
     <string name="SuccessfulLogin">You are now logged in!</string>
     <string name="SuccessfulLogout">You have successfully logged out.</string>

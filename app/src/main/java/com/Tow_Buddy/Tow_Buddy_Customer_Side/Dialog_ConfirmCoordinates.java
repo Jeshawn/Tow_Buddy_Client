@@ -21,8 +21,8 @@ public class Dialog_ConfirmCoordinates extends DialogFragment
                             DialogInterface dialog,
                             int id)
                     {
-                        CoordinateSender coordinateSender = new CoordinateSender(getContext());
-                        new Thread(coordinateSender).start();
+                        Activity_CoordinateSender activityCoordinateSender = new Activity_CoordinateSender();
+                        new Thread(activityCoordinateSender).start();
 
                     }
                 })

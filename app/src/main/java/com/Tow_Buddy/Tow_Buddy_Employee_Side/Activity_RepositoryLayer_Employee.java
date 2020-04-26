@@ -1,5 +1,8 @@
 package com.Tow_Buddy.Tow_Buddy_Employee_Side;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -12,21 +15,35 @@ import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-public class EmployeeRepositoryLayer extends AppCompatActivity implements Runnable
-
+public class Activity_RepositoryLayer_Employee extends AppCompatActivity implements Runnable //Network on Main Thread exception without Runnable
 {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        getApplicationContext();
+        new Thread(this).start(); //Done to run this on its own thread, keeping the networking code away from the Main Thread
+    }
+
+    @Override
     public void run()
     {
         attemptLogin();
     }
     public void attemptLogin()
     {
-        if(!checkForDatabaseEntry())
+        if(employeeSignedInToday())
         {
-            badLogin();
+            Looper.getMainLooper().prepare();
+            runOnUiThread(new Toast_SuccessfullyLoggedIn(this));
+            Intent towScreenIntent = new Intent(this, Activity_ActiveTowsScreen.class);
+            towScreenIntent.putExtra("EmployeeId", getIntent().getIntExtra("EmployeeId", 0));
+            startActivity(towScreenIntent);
         }
         else
         {
+            boolean loginSuccessful = false;
             try
             {
                 URL url = new URL("http://35.182.176.62:8080/employeeLogin");
@@ -39,12 +56,12 @@ public class EmployeeRepositoryLayer extends AppCompatActivity implements Runnab
                 {
                     String input = "{\"employeeName\":\""
                             +
-                            EmployeeLoginPage.static_name
+                            getIntent().getStringExtra("EmployeeName")
                             + "\", \"employeePhoneNumber\":\""
-                            + EmployeeLoginPage.static_phoneNumber
+                            + getIntent().getStringExtra("EmployeePhoneNumber")
                             + "\", \"employeeId\":\""
-                            + EmployeeLoginPage.static_employeeIdNumber
-                            + "\"}".getBytes();
+                            + getIntent().getIntExtra("EmployeeId", 0)
+                            + "\"}";
                     byte[] outputString = input.getBytes();
                     outputStream.write(outputString, 0, outputString.length);
                 }
@@ -55,9 +72,23 @@ public class EmployeeRepositoryLayer extends AppCompatActivity implements Runnab
                 {
                     response.append(responseLine.trim());
                 }
-                String jsonDataFromDatabase = response.toString();
-                Log.i("Success", jsonDataFromDatabase);
-                httpURLConnection.disconnect();
+                Integer serverStatusCode =  httpURLConnection.getResponseCode();
+                if(serverStatusCode == 200)
+                {
+                    httpURLConnection.disconnect();
+                    loginSuccessful = true;
+                    Log.i("Success", serverStatusCode.toString());
+                    Looper.getMainLooper().prepare();
+                    runOnUiThread(new Toast_SuccessfullyLoggedIn(this));
+                    Intent towScreenIntent = new Intent(this, Activity_ActiveTowsScreen.class);
+                    towScreenIntent.putExtra("EmployeeId", getIntent().getIntExtra("EmployeeId", 0));
+                    startActivity(towScreenIntent);
+                }
+                if(loginSuccessful == false)
+                {
+                    new Thread(new Toast_EmployeeLoginFailed(this)).start();
+                    throw new Exception("Response from server status was not 200");
+                }
             }
             catch (Exception exception)
             {
@@ -78,7 +109,7 @@ public class EmployeeRepositoryLayer extends AppCompatActivity implements Runnab
             try (OutputStream outputStream = httpURLConnection.getOutputStream())
             {
                 String input = "{\"employeeName\":\""
-                        + EmployeeLoginPage.static_name
+                        + getIntent().getStringExtra("EmployeeName")
                         + "\"}".getBytes();
                 byte[] outputString = input.getBytes();
                 outputStream.write(outputString, 0, outputString.length);
@@ -99,7 +130,8 @@ public class EmployeeRepositoryLayer extends AppCompatActivity implements Runnab
             Log.e("EmployeeRepositoryError", exception.toString());
         }
     }
-    private boolean checkForDatabaseEntry() {
+    private boolean employeeSignedInToday() //If employee is logged in, return true.
+    {
         boolean existsInDatabase = false;
         try
         {
@@ -118,13 +150,18 @@ public class EmployeeRepositoryLayer extends AppCompatActivity implements Runnab
             String jsonDataFromDatabase = response.toString();
             httpURLConnection.disconnect();
             JSONArray jsonArray = new JSONArray(jsonDataFromDatabase);
+            int userInputIdNumber = (getIntent().getIntExtra("EmployeeId", 0));
             JSONObject tempJSONObject;
-            for (int i = 0; i < jsonArray.length(); i++) //If there is no record of a ticket number, assign it to whoever's turn it is
+            int employeeIdFromDatabase; //Will store an id from EmployeeSignInOrder table
+
+            for (int i = 0; i < jsonArray.length(); i++) //Iterates through response for employeeId number
             {
                 tempJSONObject = jsonArray.getJSONObject(i);
-                if (tempJSONObject.getInt("EmployeeId") == Integer.parseInt(EmployeeLoginPage.static_employeeIdNumber));
+                employeeIdFromDatabase = tempJSONObject.getInt("EmployeeId");
+                if (employeeIdFromDatabase == userInputIdNumber)
                 {
                     existsInDatabase = true;
+                    this.getIntent().putExtra("EmployeeId", employeeIdFromDatabase);
                     break;
                 }
             }
@@ -134,10 +171,5 @@ public class EmployeeRepositoryLayer extends AppCompatActivity implements Runnab
             Log.e("EmployeeRepositoryError", exception.toString());
         }
         return existsInDatabase;
-    }
-    public void badLogin()
-    {
-        Dialog_IncorrectCredentials dialog_incorrectCredentials = new Dialog_IncorrectCredentials();
-        dialog_incorrectCredentials.show(getSupportFragmentManager(), "IncorrectLogin");
     }
 }

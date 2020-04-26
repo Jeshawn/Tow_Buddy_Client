@@ -2,14 +2,13 @@ package com.Tow_Buddy;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.Tow_Buddy.Tow_Buddy_Customer_Side.MainActivity;
-import com.Tow_Buddy.Tow_Buddy_Employee_Side.EmployeeLoginPage;
+import com.Tow_Buddy.Tow_Buddy_Customer_Side.Activity_SetLocation;
+import com.Tow_Buddy.Tow_Buddy_Employee_Side.Activity_EmployeeLoginPage;
 
 public class WelcomeScreen extends AppCompatActivity
 {
@@ -20,13 +19,14 @@ public class WelcomeScreen extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_screen);
+        getApplicationContext();
     }
     public void beginMainActivity(View view)
     {
         try {
             EditText customerPhoneNumber =  findViewById(R.id.customerPhoneNumber);
             EditText customerName = findViewById(R.id.customerName);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, Activity_SetLocation.class);
             if (customerPhoneNumber.getText().toString().length() != 10) {
                 incorrectPhoneNumberFormat();
                 return;
@@ -44,7 +44,7 @@ public class WelcomeScreen extends AppCompatActivity
 
     public void employeeLoggingIn(View view)
     {
-         Intent intent = new Intent(this, EmployeeLoginPage.class);
+         Intent intent = new Intent(this, Activity_EmployeeLoginPage.class);
          startActivity(intent);
     }
     public void incorrectPhoneNumberFormat()

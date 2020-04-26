@@ -8,9 +8,8 @@ import android.widget.EditText;
 
 import com.Tow_Buddy.R;
 
-public class EmployeeLoginPage extends AppCompatActivity implements Runnable
+public class Activity_EmployeeLoginPage extends AppCompatActivity implements Runnable
 {
-    public static String static_name, static_phoneNumber, static_employeeIdNumber;
     public void run()
     {
 
@@ -20,11 +19,13 @@ public class EmployeeLoginPage extends AppCompatActivity implements Runnable
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        getApplicationContext();
         setContentView(R.layout.employee_login_page);
+
     }
     public void employeeLogin(View view)
     {
-        Intent intent = new Intent(this, ActiveTowsScreen.class);
+        Intent intent = new Intent(this, Activity_RepositoryLayer_Employee.class);
         EditText employeeName = findViewById(R.id.EmployeeName);
         EditText employeePhoneNumber =  findViewById(R.id.EmployeePhoneNumber);
         EditText employeeId = findViewById(R.id.EmployeeIdNumber);
@@ -33,11 +34,11 @@ public class EmployeeLoginPage extends AppCompatActivity implements Runnable
             incorrectPhoneNumberFormat();
             return;
         }
-        static_name = employeeName.getText().toString();
-        static_phoneNumber = employeePhoneNumber.getText().toString();
-        static_employeeIdNumber = employeeId.getText().toString();
-        getMainLooper().prepare();
-        new Thread(new EmployeeRepositoryLayer()).start();
+        intent.putExtra("EmployeeName", employeeName.getText().toString());
+        intent.putExtra("EmployeePhoneNumber", employeePhoneNumber.getText().toString());
+        intent.putExtra("EmployeeId", Integer.parseInt(employeeId.getText().toString()));
+        startActivity(intent);
+
     }
     public void employeeLogout(View view)
     {

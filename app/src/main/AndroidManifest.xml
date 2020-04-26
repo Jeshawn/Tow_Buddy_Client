@@ -41,7 +41,7 @@
             android:value="wU2Zg84yeGnqNukGsQorxg" />
 
         <activity
-            android:name=".Tow_Buddy_Customer_Side.MainActivity"
+            android:name=".Tow_Buddy_Customer_Side.Activity_SetLocation"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -61,7 +61,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Tow_Buddy_Employee_Side.EmployeeLoginPage"
+            android:name=".Tow_Buddy_Employee_Side.Activity_EmployeeLoginPage"
             android:label="@string/EmployeeLoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -71,8 +71,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Tow_Buddy_Employee_Side.ActiveTowsScreen"
-            android:label="@string/Bad_Login"
+            android:name=".Tow_Buddy_Employee_Side.Activity_ActiveTowsScreen"
+            android:label="@string/Active_Tows"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -80,7 +80,26 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Tow_Buddy_Employee_Side.Activity_RepositoryLayer_Employee"
+            android:label="@string/EmployeeLoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Tow_Buddy_Customer_Side.Activity_RepositoryLayer_Customer"
+            android:label="@string/RepositoryLayerLabel_Customer"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

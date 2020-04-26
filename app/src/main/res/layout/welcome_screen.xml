@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:onClick="beginMainActivity"
-        android:text="@string/SignInButton_Text"
+        android:text="@string/RequestTow_Button"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/NotACustomerButton"
         app:layout_constraintEnd_toEndOf="parent"

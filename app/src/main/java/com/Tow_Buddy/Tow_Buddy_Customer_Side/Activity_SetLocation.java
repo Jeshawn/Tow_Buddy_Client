@@ -31,8 +31,8 @@ import java.util.List;
 
 import static com.here.android.mpa.mapping.Map.Animation.NONE;
 
-public class MainActivity extends AppCompatActivity {
-
+public class Activity_SetLocation extends AppCompatActivity
+{
     public static String customerName, customerPhoneNumber, latLongForDatabase;
     private static final String TAG = Dialog_ConfirmCoordinates.class.getSimpleName();
     public Map userMap = null; //This is the map that will be used for the coordinate service

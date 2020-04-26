@@ -16,13 +16,14 @@ import org.json.JSONArray;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ActiveTowsScreen extends AppCompatActivity
+public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runnable
 {
-    private ArrayList<String> arrayList;
+    private ArrayList<String> arrayList = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapter;
 
     @Override
@@ -30,8 +31,22 @@ public class ActiveTowsScreen extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_tows);
+        getApplicationContext();
+        new Thread(this).start();
     }
-    public void ActiveTowsScreen()
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+    }
+
+    @Override
+    public void run()
+    {
+        populateTows();
+    }
+    public void populateTows()
     {
         getActiveTows();
         this.arrayAdapter = new ArrayAdapter<String>(this, R.layout.active_tows, this.arrayList);
@@ -45,20 +60,25 @@ public class ActiveTowsScreen extends AppCompatActivity
         {
             URL url = new URL("http://35.182.176.62:8080/assignedTows");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setRequestProperty("Accept", "application/json");
             httpURLConnection.setDoOutput(true);
             try (OutputStream outputStream = httpURLConnection.getOutputStream())
             {
+
+                int employeeId = this.getIntent().getIntExtra("EmployeeId", 0);
                 String input = "{\"employeeId\":\""
-                        + this.getIntent().getCharArrayExtra("employeeId").toString() + "\"";
-                byte[] outputString = input.getBytes();
-                outputStream.write(outputString, 0, outputString.length);
+                        + employeeId
+                        + "\"}";
+                byte[] outputByteArray = input.getBytes();
+                outputStream.write(outputByteArray, 0, outputByteArray.length);
             }
             StringBuilder response = new StringBuilder();
             String responseLine;
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            Log.i("Response", httpURLConnection.getResponseMessage());
+            InputStreamReader inputStreamReader = new InputStreamReader(httpURLConnection.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             while ((responseLine = bufferedReader.readLine()) != null)
             {
                 response.append(responseLine.trim());
