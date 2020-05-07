@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,6 +26,7 @@ public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runn
 {
     private ArrayList<String> arrayList = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapter;
+    private ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -33,6 +35,11 @@ public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runn
         setContentView(R.layout.active_tows);
         getApplicationContext();
         new Thread(this).start();
+    }
+
+    public View onCreateView()
+    {
+        this.listView = (ListView) findViewById(R.id.ListOfTows);
     }
 
     @Override
@@ -49,9 +56,15 @@ public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runn
     public void populateTows()
     {
         getActiveTows();
-        this.arrayAdapter = new ArrayAdapter<String>(this, R.layout.active_tows, this.arrayList);
-        ListView listView = (ListView) findViewById(R.id.ListOfTows);
-        listView.setAdapter(arrayAdapter);
+        try
+        {
+            this.arrayAdapter = new ArrayAdapter<String>(this, R.layout.active_tows, this.arrayList);
+            listView.setAdapter(arrayAdapter);
+        }
+        catch(Exception exception)
+        {
+            Log.e("ActiveTowScreenError", exception.toString());
+        }
     }
 
     private void getActiveTows()

@@ -18,11 +18,17 @@ import org.json.JSONObject;
 public class Activity_RepositoryLayer_Employee extends AppCompatActivity implements Runnable //Network on Main Thread exception without Runnable
 {
 
+    private String employeeName, employeePhoneNumber;
+    private int employeeId;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getApplicationContext();
+        this.employeeName = getIntent().getStringExtra("EmployeeName");
+        this.employeePhoneNumber = getIntent().getStringExtra("EmployeePhoneNumber");
+        this.employeeId = getIntent().getIntExtra("EmployeeId", 0);
         new Thread(this).start(); //Done to run this on its own thread, keeping the networking code away from the Main Thread
     }
 
