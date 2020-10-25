@@ -42,7 +42,6 @@ public class Activity_RepositoryLayer_Employee extends AppCompatActivity impleme
         if(employeeSignedInToday())
         {
             Looper.getMainLooper().prepare();
-            runOnUiThread(new Toast_SuccessfullyLoggedIn(this));
             Intent towScreenIntent = new Intent(this, Activity_ActiveTowsScreen.class);
             towScreenIntent.putExtra("EmployeeId", getIntent().getIntExtra("EmployeeId", 0));
             startActivity(towScreenIntent);
@@ -90,7 +89,7 @@ public class Activity_RepositoryLayer_Employee extends AppCompatActivity impleme
                     towScreenIntent.putExtra("EmployeeId", getIntent().getIntExtra("EmployeeId", 0));
                     startActivity(towScreenIntent);
                 }
-                if(loginSuccessful == false)
+                if(!loginSuccessful)
                 {
                     new Thread(new Toast_EmployeeLoginFailed(this)).start();
                     throw new Exception("Response from server status was not 200");
@@ -116,7 +115,7 @@ public class Activity_RepositoryLayer_Employee extends AppCompatActivity impleme
             {
                 String input = "{\"employeeName\":\""
                         + getIntent().getStringExtra("EmployeeName")
-                        + "\"}".getBytes();
+                        + "\"}";
                 byte[] outputString = input.getBytes();
                 outputStream.write(outputString, 0, outputString.length);
             }

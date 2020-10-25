@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runnable
 {
-    private ArrayList<String> arrayList = new ArrayList<String>();
+    private ArrayList<String> arrayList = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
     private ListView listView;
 
@@ -40,6 +40,7 @@ public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runn
     public View onCreateView()
     {
         this.listView = (ListView) findViewById(R.id.ListOfTows);
+        return this.listView;
     }
 
     @Override
@@ -58,7 +59,7 @@ public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runn
         getActiveTows();
         try
         {
-            this.arrayAdapter = new ArrayAdapter<String>(this, R.layout.active_tows, this.arrayList);
+            this.arrayAdapter = new ArrayAdapter<>(this, R.layout.active_tows, this.arrayList);
             listView.setAdapter(arrayAdapter);
         }
         catch(Exception exception)
