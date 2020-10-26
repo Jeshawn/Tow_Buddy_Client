@@ -8,9 +8,13 @@
 
     <Button
         android:id="@+id/SignInButton"
-        android:layout_width="314dp"
-        android:layout_height="68dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="44dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:background="@android:color/holo_green_light"
         android:onClick="employeeLogin"
         android:text="@string/SignInButton_Text"
@@ -23,8 +27,12 @@
 
     <Button
         android:id="@+id/firstTimeSignIn"
-        android:layout_width="258dp"
-        android:layout_height="58dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:background="#D5CECE"
         android:text="@string/FirstTimeLogin_Button"
         android:textSize="18sp"
@@ -38,8 +46,8 @@
 
     <EditText
         android:id="@+id/EmployeeIdNumber"
-        android:layout_width="376dp"
-        android:layout_height="51dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/EmployeeId"
@@ -52,8 +60,8 @@
 
     <EditText
         android:id="@+id/EmployeeName"
-        android:layout_width="374dp"
-        android:layout_height="54dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:ems="10"
         android:hint="@string/User_Name"
@@ -67,8 +75,8 @@
 
     <EditText
         android:id="@+id/EmployeePhoneNumber"
-        android:layout_width="373dp"
-        android:layout_height="55dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
@@ -84,8 +92,8 @@
 
     <TextView
         android:id="@+id/EmployeeInfo"
-        android:layout_width="364dp"
-        android:layout_height="182dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:fontFamily="serif"
         android:text="@string/EmployeeData"

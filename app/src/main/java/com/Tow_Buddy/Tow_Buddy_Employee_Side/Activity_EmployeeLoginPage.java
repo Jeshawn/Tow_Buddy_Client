@@ -8,12 +8,9 @@ import android.widget.EditText;
 
 import com.Tow_Buddy.R;
 
-public class Activity_EmployeeLoginPage extends AppCompatActivity implements Runnable
+public class Activity_EmployeeLoginPage extends AppCompatActivity
 {
-    public void run()
-    {
 
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -25,7 +22,7 @@ public class Activity_EmployeeLoginPage extends AppCompatActivity implements Run
     }
     public void employeeLogin(View view)
     {
-        Intent intent = new Intent(this, Activity_RepositoryLayer_Employee.class);
+        Intent intent = new Intent(this, Activity_EmployeeRepositoryLayer.class);
         EditText employeeName = findViewById(R.id.EmployeeName);
         EditText employeePhoneNumber =  findViewById(R.id.EmployeePhoneNumber);
         EditText employeeId = findViewById(R.id.EmployeeIdNumber);

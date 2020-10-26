@@ -20,7 +20,7 @@ public class Activity_CoordinateSender extends AppCompatActivity implements Runn
     {
         try {
             Looper.getMainLooper().prepare();
-            Activity_RepositoryLayer_Customer towBuddyRepository = new Activity_RepositoryLayer_Customer(
+            Activity_CustomerRepositoryLayer towBuddyRepository = new Activity_CustomerRepositoryLayer(
                     Activity_SetLocation.customerName,
                     Activity_SetLocation.customerPhoneNumber,
                     new Date().toString(),

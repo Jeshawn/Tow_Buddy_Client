@@ -26,12 +26,12 @@ public class WelcomeScreen extends AppCompatActivity
         try {
             EditText customerPhoneNumber =  findViewById(R.id.customerPhoneNumber);
             EditText customerName = findViewById(R.id.customerName);
-            Intent intent = new Intent(this, Activity_SetLocation.class);
             if (customerPhoneNumber.getText().toString().length() != 10) {
                 incorrectPhoneNumberFormat();
                 return;
             }
             String phoneNumber = customerPhoneNumber.getText().toString();
+            Intent intent = new Intent(this, Activity_SetLocation.class);
             intent.putExtra("customerPhoneNumber", phoneNumber);
             intent.putExtra("customerName", customerName.getText().toString());
             startActivity(intent);

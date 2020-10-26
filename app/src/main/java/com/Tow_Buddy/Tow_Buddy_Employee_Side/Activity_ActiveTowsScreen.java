@@ -1,14 +1,12 @@
 package com.Tow_Buddy.Tow_Buddy_Employee_Side;
 
-import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.Tow_Buddy.R;
 
@@ -17,30 +15,26 @@ import org.json.JSONArray;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runnable
+public class Activity_ActiveTowsScreen extends AppCompatActivity
 {
-    private ArrayList<String> arrayList = new ArrayList<>();
-    private ArrayAdapter<String> arrayAdapter;
-    private ListView listView;
-
+    private ArrayList<String> arrayList;
+    RecyclerView recyclerView;
+    private RecyclerViewAdapter_ActiveTowsScreen recyclerViewAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.active_tows);
+        setContentView(R.layout.active_tows_ui_rows);
+        this.arrayList = this.getIntent().getStringArrayListExtra("arrayListFromDatabase");
+        this.recyclerView = findViewById(R.id.recyclerView_activeTows);
+        this.recyclerViewAdapter = new RecyclerViewAdapter_ActiveTowsScreen(this, this.arrayList);
+        this.recyclerView.setAdapter(this.recyclerViewAdapter);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getApplicationContext();
-        new Thread(this).start();
-    }
-
-    public View onCreateView()
-    {
-        this.listView = (ListView) findViewById(R.id.ListOfTows);
-        return this.listView;
     }
 
     @Override
@@ -49,67 +43,7 @@ public class Activity_ActiveTowsScreen extends AppCompatActivity implements Runn
         super.onStart();
     }
 
-    @Override
-    public void run()
-    {
-        populateTows();
-    }
-    public void populateTows()
-    {
-        getActiveTows();
-        try
-        {
-            this.arrayAdapter = new ArrayAdapter<>(this, R.layout.active_tows, this.arrayList);
-            listView.setAdapter(arrayAdapter);
-        }
-        catch(Exception exception)
-        {
-            Log.e("ActiveTowScreenError", exception.toString());
-        }
-    }
-
-    private void getActiveTows()
-    {
-        try
-        {
-            URL url = new URL("http://35.182.176.62:8080/assignedTows");
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpURLConnection.setRequestProperty("Accept", "application/json");
-            httpURLConnection.setDoOutput(true);
-            try (OutputStream outputStream = httpURLConnection.getOutputStream())
-            {
-
-                int employeeId = this.getIntent().getIntExtra("EmployeeId", 0);
-                String input = "{\"employeeId\":\""
-                        + employeeId
-                        + "\"}";
-                byte[] outputByteArray = input.getBytes();
-                outputStream.write(outputByteArray, 0, outputByteArray.length);
-            }
-            StringBuilder response = new StringBuilder();
-            String responseLine;
-            Log.i("Response", httpURLConnection.getResponseMessage());
-            InputStreamReader inputStreamReader = new InputStreamReader(httpURLConnection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            while ((responseLine = bufferedReader.readLine()) != null)
-            {
-                response.append(responseLine.trim());
-            }
-            String jsonResponse = response.toString();
-            JSONArray jsonArray = new JSONArray(jsonResponse);
-            for(int i = 0; i < jsonArray.length(); i++)
-            {
-                this.arrayList.add(jsonArray.getString(i));
-            }
-        }
-        catch(Exception exception)
-        {
-            Log.e("ActiveTowScreenError", exception.toString());
-        }
-    }
-
+    //Button for copying customer coordinates to a clipboard
     private void copyCoordinates()
     {
         String towData;

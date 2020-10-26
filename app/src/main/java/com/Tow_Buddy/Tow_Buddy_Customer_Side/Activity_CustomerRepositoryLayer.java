@@ -22,7 +22,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class Activity_RepositoryLayer_Customer extends AppCompatActivity implements Runnable
+public class Activity_CustomerRepositoryLayer extends AppCompatActivity implements Runnable
 {
     private String customerName, customerPhoneNumber, timeReceived, coordinates,  _employeePhoneNumber;
     private Integer ticketNumberFromCustomerHistory;
@@ -31,11 +31,15 @@ public class Activity_RepositoryLayer_Customer extends AppCompatActivity impleme
         newCustomer();
         updateCustomerHistory(getEmployeeId());
     }
+    public Activity_CustomerRepositoryLayer()
+    {
 
-    public Activity_RepositoryLayer_Customer(String _customerName, //Sets appropriate values
-                                             String _customerPhoneNumber,
-                                             String _timeReceived,
-                                             String _coordinates)
+    }
+
+    public Activity_CustomerRepositoryLayer(String _customerName, //Sets appropriate values
+                                            String _customerPhoneNumber,
+                                            String _timeReceived,
+                                            String _coordinates)
     {
         this.customerName = _customerName;
         this.customerPhoneNumber = _customerPhoneNumber;
@@ -43,6 +47,8 @@ public class Activity_RepositoryLayer_Customer extends AppCompatActivity impleme
         this.coordinates = _coordinates;
     }
 
+    //Make a new customer in the CustomerHistory table
+    //Calls sortForAppropriateEmployee method
     public void newCustomer()
     {
         try
@@ -80,7 +86,8 @@ public class Activity_RepositoryLayer_Customer extends AppCompatActivity impleme
         }
     }
 
-    private void sortForAppropriateEmployee()  //Get logged in employees, sort through next for tow
+    //Calls getLargestTicketNumber method
+    private void sortForAppropriateEmployee()  //Get logged in employees, sort for next to get a tow assigned
     {
     try
     {
@@ -98,16 +105,18 @@ public class Activity_RepositoryLayer_Customer extends AppCompatActivity impleme
         }
         String jsonDataFromDatabase = response.toString();
         httpURLConnection.disconnect();
-        JSONArray jsonArray = new JSONArray(jsonDataFromDatabase);
-        JSONObject tempJSONObject; //This is an array of each employee entry
+        JSONArray jsonArray = new JSONArray(jsonDataFromDatabase); //This is an array of each employee entry
+        JSONObject employeeFromDatabase;
         Integer lastAssignedTicketNumber = 500000;
+
         this.ticketNumberFromCustomerHistory = this.getLargestTicketNumber();
+
         for(int i = 0; i < jsonArray.length(); i++) //If there is no record of a ticket number, assign it to whoever's turn it is
         {
-            tempJSONObject = jsonArray.getJSONObject(i);
-            if((tempJSONObject.get("CurrentTicketNumberAssigned")).toString()  == "null")                 //Did this employee get a ticket yet?
+            employeeFromDatabase = jsonArray.getJSONObject(i);
+            if(((employeeFromDatabase.get("CurrentTicketNumberAssigned")).toString())  == "null")                 //Did this employee get a ticket yet?
             {
-                this._employeePhoneNumber =  tempJSONObject.getString("EmployeePhoneNumber");   //Everybody has a first time getting a ticket.
+                this._employeePhoneNumber =  employeeFromDatabase.getString("EmployeePhoneNumber");   //Everybody has a first time getting a ticket.
                 sendCoordinates(this._employeePhoneNumber);                                           //If no ticket, send coordinates to this phone number and update table
                 return;
             }
@@ -115,11 +124,11 @@ public class Activity_RepositoryLayer_Customer extends AppCompatActivity impleme
             {
                 for (int g = 0; g < jsonArray.length(); g++) //Everybody's got a ticket number, so assign it in the proper order
                 {
-                    tempJSONObject = jsonArray.getJSONObject(g);
-                    if(tempJSONObject.getInt("CurrentTicketNumberAssigned") < lastAssignedTicketNumber) //If the employee could be up next
+                    employeeFromDatabase = jsonArray.getJSONObject(g);
+                    if(employeeFromDatabase.getInt("CurrentTicketNumberAssigned") < lastAssignedTicketNumber) //If the employee could be up next
                     {
-                        this._employeePhoneNumber = tempJSONObject.getString("EmployeePhoneNumber");
-                        lastAssignedTicketNumber = tempJSONObject.getInt("CurrentTicketNumberAssigned");
+                        this._employeePhoneNumber = employeeFromDatabase.getString("EmployeePhoneNumber");
+                        lastAssignedTicketNumber = employeeFromDatabase.getInt("CurrentTicketNumberAssigned");
                         if(lastAssignedTicketNumber == null)
                         {
                             lastAssignedTicketNumber = 0;
@@ -137,7 +146,7 @@ public class Activity_RepositoryLayer_Customer extends AppCompatActivity impleme
         Log.e("EmployeeSortError", exception.toString());
     }
     }
-    private int getLargestTicketNumber() //Gets the largest ticket number in the database to provided an accurate one
+    private int getLargestTicketNumber() //Gets the largest ticket number in the database to provide an accurate one
     {
 
         Integer largestTicketNumber = 0;
@@ -155,9 +164,9 @@ public class Activity_RepositoryLayer_Customer extends AppCompatActivity impleme
             {
                 response.append(responseLine.trim());
             }
-            JSONArray jsonArray1 = new JSONArray(response.toString());
-            JSONObject jsonObject = jsonArray1.getJSONObject(0);
-            largestTicketNumber = jsonObject.getInt("MAX(TicketNumber)");
+            JSONArray arrayOfTicketNumbers = new JSONArray(response.toString());
+            JSONObject jsonObjectResponse = arrayOfTicketNumbers.getJSONObject(0);
+            largestTicketNumber = jsonObjectResponse.getInt("MAX(TicketNumber)");
         }
         catch(Exception exception)
         {
@@ -310,7 +319,7 @@ public class Activity_RepositoryLayer_Customer extends AppCompatActivity impleme
         }
     }
 
-    private Integer getEmployeeId()
+    private Integer getEmployeeId() //Gets EmployeeId from Employee table
     {
         Integer employeeId = 0;
         try {

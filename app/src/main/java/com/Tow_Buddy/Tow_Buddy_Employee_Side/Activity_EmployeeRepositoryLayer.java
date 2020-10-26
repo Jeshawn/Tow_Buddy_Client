@@ -12,20 +12,22 @@ import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-public class Activity_RepositoryLayer_Employee extends AppCompatActivity implements Runnable //Network on Main Thread exception without Runnable
+public class Activity_EmployeeRepositoryLayer extends AppCompatActivity implements Runnable //Network on Main Thread exception without Runnable
 {
-
-    private String employeeName, employeePhoneNumber;
     private int employeeId;
+    private String employeeName, employeePhoneNumber;
+    private ArrayList<String> arrayList;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getApplicationContext();
+        this.arrayList = new ArrayList<>();
         this.employeeName = getIntent().getStringExtra("EmployeeName");
         this.employeePhoneNumber = getIntent().getStringExtra("EmployeePhoneNumber");
         this.employeeId = getIntent().getIntExtra("EmployeeId", 0);
@@ -42,8 +44,10 @@ public class Activity_RepositoryLayer_Employee extends AppCompatActivity impleme
         if(employeeSignedInToday())
         {
             Looper.getMainLooper().prepare();
+            populateCurrentlyAssignedTows();
             Intent towScreenIntent = new Intent(this, Activity_ActiveTowsScreen.class);
             towScreenIntent.putExtra("EmployeeId", getIntent().getIntExtra("EmployeeId", 0));
+            towScreenIntent.putExtra("arrayListFromDatabase", this.arrayList);
             startActivity(towScreenIntent);
         }
         else
@@ -87,6 +91,8 @@ public class Activity_RepositoryLayer_Employee extends AppCompatActivity impleme
                     runOnUiThread(new Toast_SuccessfullyLoggedIn(this));
                     Intent towScreenIntent = new Intent(this, Activity_ActiveTowsScreen.class);
                     towScreenIntent.putExtra("EmployeeId", getIntent().getIntExtra("EmployeeId", 0));
+                    populateCurrentlyAssignedTows();
+                    towScreenIntent.putExtra("arrayListFromDatabase", this.arrayList);
                     startActivity(towScreenIntent);
                 }
                 if(!loginSuccessful)
@@ -176,5 +182,51 @@ public class Activity_RepositoryLayer_Employee extends AppCompatActivity impleme
             Log.e("EmployeeRepositoryError", exception.toString());
         }
         return existsInDatabase;
+    }
+
+    private void populateCurrentlyAssignedTows()
+    {
+        try
+        {
+            URL url = new URL("http://35.182.176.62:8080/assignedTows");
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setRequestProperty("Accept", "application/json");
+            httpURLConnection.setDoOutput(true);
+            try (OutputStream outputStream = httpURLConnection.getOutputStream())
+            {
+
+                int employeeId = this.getIntent().getIntExtra("EmployeeId", 0);
+                String input = "{\"employeeId\":\""
+                        + employeeId
+                        + "\"}";
+                byte[] outputByteArray = input.getBytes();
+                outputStream.write(outputByteArray, 0, outputByteArray.length);
+            }
+            StringBuilder response = new StringBuilder();
+            String responseLine;
+            Log.i("Response", httpURLConnection.getResponseMessage());
+            InputStreamReader inputStreamReader = new InputStreamReader(httpURLConnection.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            while ((responseLine = bufferedReader.readLine()) != null)
+            {
+                response.append(responseLine.trim());
+            }
+            String jsonResponse = response.toString();
+            JSONArray jsonArray = new JSONArray(jsonResponse);
+            for(int i = 0; i < jsonArray.length(); i++)
+            {
+                this.arrayList.add(jsonArray.getString(i));
+            }
+            System.out.println(this.arrayList);
+            System.out.println(jsonArray.getString(0));
+
+
+        }
+        catch(Exception exception)
+        {
+            Log.e("ActiveTowScreenError", exception.toString());
+        }
     }
 }
